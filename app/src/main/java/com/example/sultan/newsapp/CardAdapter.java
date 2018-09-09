@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
-public class CardAdapter extends ArrayAdapter<NewsCard> {
+public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.OnItemClickListener {
 
     private Context mContext;
     private ArrayList<NewsCard> cardList;
@@ -44,4 +44,7 @@ public class CardAdapter extends ArrayAdapter<NewsCard> {
 
         return card;
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
 }

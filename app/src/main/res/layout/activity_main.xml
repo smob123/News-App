@@ -9,6 +9,13 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/newsList"></ListView>
+        android:id="@+id/newsList"
+        android:focusable="true"
+        android:clickable="true"></ListView>
+
+    <FrameLayout
+        android:id="@+id/webFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
