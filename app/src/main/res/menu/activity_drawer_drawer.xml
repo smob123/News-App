@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/trending"
+            android:icon="@drawable/icons8_news_50"
+            android:title="Headlines" />
+        <item
+            android:id="@+id/sports"
+            android:icon="@drawable/icons8_sport_50"
+            android:title="Sports" />
+        <item
+            android:id="@+id/music"
+            android:icon="@drawable/icons8_musical_notes_filled_50"
+            android:title="Music" />
+
+        <item
+            android:id="@+id/food"
+            android:icon="@drawable/icons8_food_filled_50"
+            android:title="Food" />
+
+        <item
+            android:id="@+id/fashion"
+            android:icon="@drawable/icons8_skirt_filled_50"
+            android:title="Fashion" />
+    </group>
+
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/icons8_about_filled_50"
+                android:title="Info" />
+        </menu>
+    </item>
+
+</menu>

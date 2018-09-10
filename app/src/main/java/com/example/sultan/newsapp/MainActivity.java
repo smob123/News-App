@@ -1,51 +1,61 @@
 package com.example.sultan.newsapp;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Fragment {
 
     private ListView list;
     private CardAdapter adapter;
+    private String url;
     String title, imgURL, description, articleUrl;
 
+    public MainActivity() {
+
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_main, container, false);
+        list = view.findViewById(R.id.newsList);
 
         fetch();
+
+        return view;
     }
 
     private void fetch() {
-        list = findViewById(R.id.newsList);
         final ArrayList<NewsCard> cardList = new ArrayList<>();
 
-        final String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=1b3db723c84947058381da0ff4b821f7";
-
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, null,  new JsonHttpResponseHandler() {
+        client.get(getUrl(), null, new JsonHttpResponseHandler() {
             @Override
-            public void onStart() {}
+            public void onStart() {
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONArray articles = response.getJSONArray("articles");
 
-                    for(int i = 0; i < articles.length(); i++) {
+                    for (int i = 0; i < articles.length(); i++) {
                         JSONObject obj = articles.getJSONObject(i);
 
                         title = obj.getString("title");
@@ -53,27 +63,36 @@ public class MainActivity extends AppCompatActivity {
                         description = obj.getString("description");
                         articleUrl = obj.getString("url");
 
-                        if(!title.equals("null") && !imgURL.equals("null") && !description.equals("null")) {
+                        if (!title.equals("null") && !imgURL.equals("null") && !description.equals("null")) {
                             cardList.add(new NewsCard(imgURL, title, description, articleUrl));
                         }
                     }
 
-                    adapter = new CardAdapter(MainActivity.this, cardList);
+                    adapter = new CardAdapter(getActivity(), cardList);
                     list.setAdapter(adapter);
 
                     handleClick(list);
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.toString());
                 }
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {}
+            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
+            }
 
             @Override
-            public void onRetry(int retryNo) {}
+            public void onRetry(int retryNo) {
+            }
         });
+    }
+
+    public void setUrl(String u) {
+        url = u;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     private void handleClick(ListView view) {
@@ -90,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         WebFragment frag = new WebFragment();
         frag.setUrl(url);
         Fragment webFrag = frag;
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         //replace view
         transaction.replace(R.id.webFrag, webFrag);

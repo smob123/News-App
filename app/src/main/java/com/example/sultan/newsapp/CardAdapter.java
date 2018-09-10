@@ -10,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.OnItemClickListener {
@@ -19,7 +21,7 @@ public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.O
     private ArrayList<NewsCard> cardList;
 
     public CardAdapter(@NonNull Context context, ArrayList<NewsCard> list) {
-        super(context, 0 , list);
+        super(context, 0, list);
         mContext = context;
         cardList = list;
     }
@@ -27,7 +29,7 @@ public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.O
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View card = convertView;
-        if(card == null) {
+        if (card == null) {
             card = LayoutInflater.from(mContext).inflate(R.layout.activity_card, parent, false);
         }
 
@@ -46,5 +48,6 @@ public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.O
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    }
 }
