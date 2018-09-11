@@ -1,6 +1,7 @@
 package com.example.sultan.newsapp;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,11 +21,13 @@ public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
+    private String region = "us";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -37,8 +40,16 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+       //TODO pass to main fragment
+
+        //check if there is a value from regionActivity
+        try {
+            region = getIntent().getExtras().getString("code");
+        }
+        catch(Exception e){}
+
         //set the start tab to be the trending tab
-       onNavigationItemSelected(navigationView.getMenu().getItem(0).setChecked(true));
+        onNavigationItemSelected(navigationView.getMenu().getItem(0).setChecked(true));
     }
 
     @Override
@@ -67,7 +78,7 @@ public class DrawerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(DrawerActivity.this, RegionActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -79,12 +90,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        //create new fragment and transaction
+        //create new fragment and change the action bar text
         MainActivity activity = new MainActivity();
         toolbar.setTitle(item.toString());
 
         if (id == R.id.trending) {
-            activity.setUrl("https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=1b3db723c84947058381da0ff4b821f7");
+            activity.setUrl("https://newsapi.org/v2/top-headlines?country=" + region + "&apiKey=1b3db723c84947058381da0ff4b821f7");
         } else if (id == R.id.sports) {
             activity.setUrl("https://newsapi.org/v2/everything?q=sports&apiKey=1b3db723c84947058381da0ff4b821f7");
         } else if (id == R.id.music) {
@@ -94,7 +105,11 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.fashion) {
             activity.setUrl("https://newsapi.org/v2/everything?q=fashion&apiKey=1b3db723c84947058381da0ff4b821f7");
         }
+        else {
+            return false;
+        }
 
+        //setup the new fragment and create a transaction
         Fragment activityFrag = activity;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 

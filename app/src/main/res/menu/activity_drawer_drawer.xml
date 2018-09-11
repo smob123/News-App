@@ -28,13 +28,4 @@
             android:title="Fashion" />
     </group>
 
-    <item android:title="About">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/icons8_about_filled_50"
-                android:title="Info" />
-        </menu>
-    </item>
-
 </menu>
