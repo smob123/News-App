@@ -9,6 +9,18 @@
             android:icon="@drawable/icons8_news_50"
             android:title="Headlines" />
         <item
+            android:id="@+id/science"
+            android:icon="@drawable/icons8_science_50"
+            android:title="Science" />
+        <item
+            android:id="@+id/weather"
+            android:icon="@drawable/icons8_partly_cloudy_day_50"
+            android:title="Weather" />
+        <item
+            android:id="@+id/tech"
+            android:icon="@drawable/icons8_workstation_filled_50"
+            android:title="Technology" />
+        <item
             android:id="@+id/sports"
             android:icon="@drawable/icons8_sport_50"
             android:title="Sports" />
@@ -26,6 +38,16 @@
             android:id="@+id/fashion"
             android:icon="@drawable/icons8_skirt_filled_50"
             android:title="Fashion" />
+
+        <item
+            android:id="@+id/celebrity"
+            android:icon="@drawable/icons8_star_icon_50"
+            android:title="Celebrity" />
+
+        <item
+            android:id="@+id/stock"
+            android:icon="@drawable/icons8_ratings_50"
+            android:title="Stock" />
     </group>
 
 </menu>

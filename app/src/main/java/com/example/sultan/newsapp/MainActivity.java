@@ -36,8 +36,6 @@ public class MainActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         list = view.findViewById(R.id.newsList);
 
-        fetch();
-
         return view;
     }
 
@@ -89,6 +87,7 @@ public class MainActivity extends Fragment {
 
     public void setUrl(String u) {
         url = u;
+        fetch();
     }
 
     public String getUrl() {
@@ -119,5 +118,9 @@ public class MainActivity extends Fragment {
 
         //commit transaction
         transaction.commit();
+    }
+
+    public void onBackPressed() {
+        getActivity().getFragmentManager().popBackStack();
     }
 }

@@ -1,13 +1,9 @@
 package com.example.sultan.newsapp;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +18,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private String region = "us";
+    private final MainActivity activity = new MainActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +37,13 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-       //TODO pass to main fragment
+        setTitle("Headlines");
 
-        //check if there is a value from regionActivity
-        try {
-            region = getIntent().getExtras().getString("code");
-        }
-        catch(Exception e){}
+        //check if there is a value passed from regionActivity
+
+            if(getIntent().getExtras() != null) {
+                region = getIntent().getExtras().getString("code");
+            }
 
         //set the start tab to be the trending tab
         onNavigationItemSelected(navigationView.getMenu().getItem(0).setChecked(true));
@@ -59,6 +56,8 @@ public class DrawerActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            activity.onBackPressed();
+            moveTaskToBack(true);
         }
     }
 
@@ -91,22 +90,14 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //create new fragment and change the action bar text
-        MainActivity activity = new MainActivity();
+
         toolbar.setTitle(item.toString());
 
-        if (id == R.id.trending) {
+        if(id == R.id.trending) {
             activity.setUrl("https://newsapi.org/v2/top-headlines?country=" + region + "&apiKey=1b3db723c84947058381da0ff4b821f7");
-        } else if (id == R.id.sports) {
-            activity.setUrl("https://newsapi.org/v2/everything?q=sports&apiKey=1b3db723c84947058381da0ff4b821f7");
-        } else if (id == R.id.music) {
-            activity.setUrl("https://newsapi.org/v2/everything?q=music&apiKey=1b3db723c84947058381da0ff4b821f7");
-        } else if (id == R.id.food) {
-            activity.setUrl("https://newsapi.org/v2/everything?q=food&apiKey=1b3db723c84947058381da0ff4b821f7");
-        } else if (id == R.id.fashion) {
-            activity.setUrl("https://newsapi.org/v2/everything?q=fashion&apiKey=1b3db723c84947058381da0ff4b821f7");
         }
         else {
-            return false;
+            activity.setUrl("https://newsapi.org/v2/everything?q=" + item.toString() + "&apiKey=1b3db723c84947058381da0ff4b821f7");
         }
 
         //setup the new fragment and create a transaction
