@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +48,7 @@ public class DrawerActivity extends AppCompatActivity
             }
 
         //set the start tab to be the trending tab
-        onNavigationItemSelected(navigationView.getMenu().getItem(0).setChecked(true));
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override

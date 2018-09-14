@@ -1,5 +1,6 @@
 package com.example.sultan.newsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -104,20 +105,11 @@ public class MainActivity extends Fragment {
     }
 
     private void browse(String url) {
-        //create new fragment and transaction
-        WebFragment frag = new WebFragment();
-        frag.setUrl(url);
-        Fragment webFrag = frag;
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-
-        //replace view
-        transaction.replace(R.id.webFrag, webFrag);
-
-        //add transaction to back stack
-        transaction.addToBackStack(null);
-
-        //commit transaction
-        transaction.commit();
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        Intent browser = new Intent(getActivity().getApplication(), WebActivity.class);
+        browser.putExtras(bundle);
+        startActivity(browser);
     }
 
     public void onBackPressed() {
