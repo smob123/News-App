@@ -20,7 +20,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private String region = "us";
-    private final MainActivity activity = new MainActivity();
+    private MainActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +92,9 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //create new fragment and change the action bar text
-
         toolbar.setTitle(item.toString());
+
+        activity = new MainActivity();
 
         if(id == R.id.trending) {
             activity.setUrl("https://newsapi.org/v2/top-headlines?country=" + region + "&apiKey=1b3db723c84947058381da0ff4b821f7");

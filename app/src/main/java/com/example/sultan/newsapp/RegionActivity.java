@@ -1,30 +1,30 @@
 package com.example.sultan.newsapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toolbar;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 
 public class RegionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView regions;
-    private final String url = "https://pkgstore.datahub.io/core/country-list/data_json/data/8c458f2d15d9f2119654b29ede6e45b8/data_json.json";
     private final ArrayList<String> nameList = new ArrayList<>();
-    final ArrayList<String> codeList = new ArrayList<>();
+    final ArrayList<String> areaCodeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,55 +34,69 @@ public class RegionActivity extends AppCompatActivity implements AdapterView.OnI
 
         regions = findViewById(R.id.regionList);
 
-        addRegions();
+        ReadJson();
     }
 
-    public void addRegions() {
+    private void ReadJson() {
+        String json;
 
+        try {
+            InputStream is = getAssets().open("countries.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+            JSONArray array = new JSONArray(json);
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, null, new JsonHttpResponseHandler() {
-            @Override
-            public void onStart() {}
+            for (int i = 0; i < array.length(); i++) {
+                    JSONObject country = array.getJSONObject(i);
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {}
+                    String name = country.getString("Name");
+                    String code = country.getString("Code");
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
-                for(int i = 0; i < responseArray.length(); i++) {
-                    try {
-                        JSONObject country = responseArray.getJSONObject(i);
-
-                        String name = country.getString("Name");
-                        String code = country.getString("Code");
-
-                        nameList.add(name);
-                        codeList.add(code);
-                    }
-                    catch (Exception e){
-                        System.out.println(e);
-                    }
-                }
-
-                final ArrayAdapter adapter = new ArrayAdapter<>(regions.getContext(),
-                        android.R.layout.simple_list_item_1, nameList);
-
-                regions.setAdapter(adapter);
-                regions.setOnItemClickListener(RegionActivity.this);
+                    nameList.add(name);
+                    areaCodeList.add(code);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public void onRetry(int retryNo) {}
-        });
+        final ArrayAdapter adapter = new ArrayAdapter<>(regions.getContext(),
+                android.R.layout.simple_list_item_1, nameList);
+
+        regions.setAdapter(adapter);
+        regions.setOnItemClickListener(RegionActivity.this);
+
+        searchHandler(adapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("code", codeList.get(position));
+        bundle.putString("code", areaCodeList.get(position));
         Intent main = new Intent(getApplication(), DrawerActivity.class);
         main.putExtras(bundle);
         startActivity(main);
     }
+
+    public void searchHandler(final ArrayAdapter regionList) {
+        EditText searchBar = findViewById(R.id.search_bar);
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                regionList.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+    }
+
 }
