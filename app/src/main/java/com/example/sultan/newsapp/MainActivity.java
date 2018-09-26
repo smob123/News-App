@@ -1,9 +1,13 @@
 package com.example.sultan.newsapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +31,7 @@ public class MainActivity extends Fragment {
     private String url;
     String title, imgURL, description, articleUrl;
 
-    public MainActivity() {
-
-    }
+    public MainActivity() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +39,21 @@ public class MainActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         list = view.findViewById(R.id.newsList);
 
+        refreshLayout(view);
+
         return view;
+    }
+
+    private void refreshLayout(View view) {
+        final SwipeRefreshLayout layout = view.findViewById(R.id.refresh_layout);
+
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetch();
+                layout.setRefreshing(false);
+            }
+        });
     }
 
     private void fetch() {
@@ -62,13 +78,14 @@ public class MainActivity extends Fragment {
                         description = obj.getString("description");
                         articleUrl = obj.getString("url");
 
-                        if (!title.equals("null") && !imgURL.equals("null") && !description.equals("null")) {
+                        if(!title.equals("null")) {
                             cardList.add(new NewsCard(imgURL, title, description, articleUrl));
                         }
                     }
 
                     adapter = new CardAdapter(getActivity(), cardList);
                     list.setAdapter(adapter);
+                    getPermissions(adapter);
 
                     handleClick(list);
                 } catch (Exception e) {
@@ -114,5 +131,17 @@ public class MainActivity extends Fragment {
 
     public void onBackPressed() {
         getActivity().getFragmentManager().popBackStack();
+    }
+
+    private void getPermissions(CardAdapter adapter) {
+        String permissions[] = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        for(int i = 0; i < permissions.length; i++) {
+            if (ContextCompat.checkSelfPermission(getContext(), permissions[i]) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), permissions, 1);
+            }
+        }
     }
 }

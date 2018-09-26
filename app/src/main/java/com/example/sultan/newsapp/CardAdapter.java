@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.OnItemClickListener {
+public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.OnItemClickListener,
+                                                                    Serializable {
 
     private Context mContext;
     private ArrayList<NewsCard> cardList;
@@ -36,13 +38,20 @@ public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.O
         NewsCard currentCard = cardList.get(position);
 
         ImageView img = card.findViewById(R.id.newsImage);
-        Picasso.get().load(currentCard.getUrl()).into(img);
+        if(!currentCard.getUrl().equals("null")) {
+            Picasso.get().load(currentCard.getUrl()).into(img);
+        }
 
         TextView title = card.findViewById(R.id.title);
         title.setText(currentCard.getArticleTitle());
 
         TextView desc = card.findViewById(R.id.description);
-        desc.setText(currentCard.getDescription());
+        if(!currentCard.getDescription().equals("null")) {
+            desc.setText(currentCard.getDescription());
+        }
+        else {
+            desc.setVisibility(View.GONE);
+        }
 
         return card;
     }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -76,7 +75,8 @@ public class RegionActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("code", areaCodeList.get(position));
+        bundle.putString("code", areaCodeList.get(nameList.indexOf(parent
+                .getItemAtPosition(position).toString())));
         Intent main = new Intent(getApplication(), DrawerActivity.class);
         main.putExtras(bundle);
         startActivity(main);
@@ -98,5 +98,4 @@ public class RegionActivity extends AppCompatActivity implements AdapterView.OnI
             public void afterTextChanged(Editable editable) {}
         });
     }
-
 }

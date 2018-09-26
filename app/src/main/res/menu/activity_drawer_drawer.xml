@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/trending"
+            android:id="@+id/headlines"
             android:icon="@drawable/icons8_news_50"
             android:title="Headlines" android:checked="true" />
         <item
