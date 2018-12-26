@@ -11,11 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true"></ListView>
-
-    <FrameLayout
-        android:id="@+id/webFrag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:focusable="true"
+        android:background="#eeee"
+        android:divider="#eeee"></ListView>
 
 </android.support.v4.widget.SwipeRefreshLayout>

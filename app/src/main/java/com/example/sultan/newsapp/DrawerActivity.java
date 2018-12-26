@@ -73,7 +73,7 @@ public class DrawerActivity extends AppCompatActivity
         // Handle action bar item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.region) {
             startActivity(new Intent(DrawerActivity.this, RegionActivity.class));
         }
 

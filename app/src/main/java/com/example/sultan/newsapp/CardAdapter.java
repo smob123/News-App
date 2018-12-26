@@ -53,6 +53,9 @@ public class CardAdapter extends ArrayAdapter<NewsCard> implements AdapterView.O
             desc.setVisibility(View.GONE);
         }
 
+        TextView sourceView = card.findViewById(R.id.articleSource);
+        sourceView.setText(currentCard.getSource());
+
         return card;
     }
 

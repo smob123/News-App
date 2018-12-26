@@ -3,13 +3,14 @@ package com.example.sultan.newsapp;
 public class NewsCard {
 
     private String imgUrl, articleTitle, articleDescription,
-            websiteURL;
+            websiteURL, source;
 
-    public NewsCard(String imgURL, String title, String desc, String web) {
+    public NewsCard(String imgURL, String title, String desc, String web, String articleSource) {
         imgUrl = imgURL;
         articleTitle = title;
         articleDescription = desc;
         websiteURL = web;
+        source = articleSource;
     }
 
     public void setUrl(String url) {
@@ -42,5 +43,13 @@ public class NewsCard {
 
     public String getWebsite() {
         return websiteURL;
+    }
+
+    public void setSource(String s) {
+        source = s;
+    }
+
+    public String getSource() {
+        return source;
     }
 }

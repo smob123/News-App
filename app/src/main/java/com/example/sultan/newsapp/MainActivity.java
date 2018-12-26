@@ -30,7 +30,7 @@ public class MainActivity extends Fragment {
     private ListView list;
     private CardAdapter adapter;
     private String url;
-    private String title, imgURL, description, articleUrl;
+    private String title, imgURL, description, articleUrl, source;
     private StoreCache cache;
 
     public MainActivity() {
@@ -116,9 +116,10 @@ public class MainActivity extends Fragment {
                 imgURL = obj.getString("urlToImage");
                 description = obj.getString("description");
                 articleUrl = obj.getString("url");
+                source = obj.getJSONObject("source").getString("name");
 
                 if (!title.equals("null")) {
-                    cardList.add(new NewsCard(imgURL, title, description, articleUrl));
+                    cardList.add(new NewsCard(imgURL, title, description, articleUrl, source));
                 }
             }
 
