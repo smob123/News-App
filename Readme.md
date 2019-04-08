@@ -1,5 +1,5 @@
 # News App
-- This is a new application that fetches data from an api, and displays it to the user in a card form.
+- This is a news application that fetches data from an api, and displays it to the user in mutiple card views.
 - It supports Android devices that run Android Lolipop and above
 
 # Screenshot:
