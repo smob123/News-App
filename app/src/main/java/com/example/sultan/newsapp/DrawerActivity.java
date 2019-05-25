@@ -2,9 +2,10 @@ package com.example.sultan.newsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,13 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Toolbar toolbar;
-    private String region = "us";
-    private MainActivity activity;
+    private Toolbar toolbar; //the top toolbar
+    private String region = "us"; //the default region for the news api
+    private MainActivity activity; //main activity instance to handle different navigation drawer screens
+    private CollapsingToolbarLayout collapsingToolbar;
+    private ImageView toolbarBackground; //the background image for the collapsing toolbar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,9 @@ public class DrawerActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        collapsingToolbar = findViewById(R.id.collapsingToolbar);
+        toolbarBackground = findViewById(R.id.toolbarImage);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,9 +48,9 @@ public class DrawerActivity extends AppCompatActivity
 
         //check if there is a value passed from regionActivity
 
-            if(getIntent().getExtras() != null) {
-                region = getIntent().getExtras().getString("code");
-            }
+        if (getIntent().getExtras() != null) {
+            region = getIntent().getExtras().getString("code");
+        }
 
         //set the start tab to be the trending tab
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
@@ -86,16 +93,48 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        //create new fragment and change the action bar text
-        toolbar.setTitle(item.toString());
+        //create new fragment and change the collapsing tool bar's text
+        collapsingToolbar.setTitle(item.toString());
 
         activity = new MainActivity();
 
-        if(id == R.id.headlines) {
+        if (id == R.id.headlines) {
             activity.setUrl("https://newsapi.org/v2/top-headlines?country=" + region + "&apiKey=1b3db723c84947058381da0ff4b821f7");
-        }
-        else {
+            toolbarBackground.setImageResource(R.drawable.headlines);
+        } else {
             activity.setUrl("https://newsapi.org/v2/everything?q=" + item.toString() + "&apiKey=1b3db723c84947058381da0ff4b821f7");
+
+            //set the header image
+            switch (id) {
+                case R.id.science:
+                    toolbarBackground.setImageResource(R.drawable.science);
+                    break;
+                case R.id.weather:
+                    toolbarBackground.setImageResource(R.drawable.weather);
+                    break;
+
+                case R.id.tech:
+                    toolbarBackground.setImageResource(R.drawable.tech);
+                    break;
+                case R.id.sports:
+                    toolbarBackground.setImageResource(R.drawable.sport);
+                    break;
+                case R.id.music:
+                    toolbarBackground.setImageResource(R.drawable.music);
+                    break;
+                case R.id.food:
+                    toolbarBackground.setImageResource(R.drawable.food);
+                    break;
+                case R.id.fashion:
+                    toolbarBackground.setImageResource(R.drawable.fashion);
+                    break;
+                case R.id.celebrity:
+                    toolbarBackground.setImageResource(R.drawable.celebrity);
+                    break;
+                case R.id.stock:
+                    toolbarBackground.setImageResource(R.drawable.stock);
+                    break;
+            }
         }
 
         //setup the new fragment and create a transaction

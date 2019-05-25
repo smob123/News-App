@@ -4,7 +4,7 @@
 
 # Screenshot:
 
-<img src='https://user-images.githubusercontent.com/26127333/50450978-41539900-0942-11e9-9c05-37bc421a82ec.png' height='400px' />
+<img src='https://user-images.githubusercontent.com/26127333/58375423-da94e300-7fa6-11e9-90b4-0bc450724bdf.PNG' height='400px' />
 
 <img src='https://user-images.githubusercontent.com/26127333/50451003-63e5b200-0942-11e9-9e60-87eefb87d988.png' height='400px' />
 

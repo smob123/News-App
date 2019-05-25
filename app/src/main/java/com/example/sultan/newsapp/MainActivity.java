@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,10 @@ public class MainActivity extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         list = view.findViewById(R.id.newsList);
+
+        //allow nested scrolling for the CollapsingToolbar to work
+        list.setNestedScrollingEnabled(true);
+        ViewCompat.setNestedScrollingEnabled(list, true);
 
         cache = new StoreCache(getContext());
         checkCache();
