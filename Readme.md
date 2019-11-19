@@ -2,6 +2,9 @@
 - This is a news application that fetches data from an api, and displays it to the user in mutiple card views.
 - It supports Android devices that run Android Lolipop and above
 
+# How to run
+Open the project in Android Studio, and click on "Run"
+
 # Screenshot:
 
 <img src='https://user-images.githubusercontent.com/26127333/58375423-da94e300-7fa6-11e9-90b4-0bc450724bdf.PNG' width='300px' />
