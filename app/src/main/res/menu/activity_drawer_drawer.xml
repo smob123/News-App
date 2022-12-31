@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/headlines"
+            android:icon="@drawable/icons8_news_50"
+            android:title="Headlines" android:checked="true" />
+        <item
+            android:id="@+id/science"
+            android:icon="@drawable/icons8_science_50"
+            android:title="Science" />
+        <item
+            android:id="@+id/weather"
+            android:icon="@drawable/icons8_partly_cloudy_day_50"
+            android:title="Weather" />
+        <item
+            android:id="@+id/tech"
+            android:icon="@drawable/icons8_workstation_filled_50"
+            android:title="Technology" />
+        <item
+            android:id="@+id/sports"
+            android:icon="@drawable/icons8_sport_50"
+            android:title="Sports" />
+
+        <item
+            android:id="@+id/food"
+            android:icon="@drawable/icons8_food_filled_50"
+            android:title="Food" />
+
+        <item
+            android:id="@+id/stock"
+            android:icon="@drawable/icons8_ratings_50"
+            android:title="Stock" />
+    </group>
+
+</menu>
